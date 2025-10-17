@@ -1,24 +1,28 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNavtiveStackNavigator } from 'react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ModuleListScreen from './src/components/screens/ModuleListScreen';
+
+const Stack = createNativeStackNavigator();
+
 export const App = () => {
   // Initialisations ----------------------
   // State ----------------------------
   // Handlers -----------------------
   // View -----------------------------
   return (
-
-  
-
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='ModuleListScreen'>
+      <Stack.Navigator 
+      initialRouteName='ModuleListScreen'
+      screenOptions={{
+        headerStyle: {backgroundColor: 'black'}
+      }}
+      >
         <Stack.Screen 
           name='ModuleListScreen'
           component={ModuleListScreen}
           options={{ title: 'List modules'}}
           />
       </Stack.Navigator>
-
 
     </NavigationContainer>
   
