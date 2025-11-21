@@ -1,37 +1,29 @@
-import { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import Screen from '../layout/Screen';
-import ModuleList from '../entity/modules/ModuleList';
-import RenderCount from '../UI/RenderCount';
+import { useState } from "react";
+import { StyleSheet } from "react-native";
+import Screen from "../layout/Screen";
+import ModuleList from "../entity/modules/ModuleList";
 
-import initialModules from '../../data/modules.js';
+import initialModules from "../../data/modules.js";
 
-export const ModuleListScreen = () => {
+const ModuleListScreen = ({ navigation }) => {
   // Initialisations ----------------------
- 
+
   // State ----------------------------
-const [modules, setModules ] = useState(initialModules);
+  const [modules, setModules] = useState(initialModules);
 
   // Handlers -----------------------
-  const handleDelete = (module) => setModules( modules.filter((item) => item.ModuleID !== module.ModuleID ));
-    
-    
-    
-      
-  
+  const handleSelect = (module) =>
+    navigation.navigate("ModuleViewScreen", { module });
+  const handleDelete = (module) =>
+    setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
+
   // View -----------------------------
   return (
     <Screen>
-     <RenderCount />
-     <ModuleList modules={modules} onSelect={handleDelete}/> 
+      <ModuleList modules={modules} onSelect={handleSelect} />
     </Screen>
-  
   );
 };
 
-const styles = StyleSheet.create({
- 
-  
-  
-});
+const styles = StyleSheet.create({});
 export default ModuleListScreen;
