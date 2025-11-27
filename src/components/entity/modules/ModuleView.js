@@ -14,7 +14,7 @@ const ModuleView = ({ module, onDelete }) => {
 
 
       "Delete warning",
-      window.alert(`Are you sure that you want to delete module ${module.ModuleCode} ${module.ModuleName}`),
+      `Are you sure that you want to delete module ${module.ModuleCode} ${module.ModuleName}`,
       [{ text: "Cancel" }, { text: "Delete", onPress: handleDelete }]
     );
   // View --------------------------------
