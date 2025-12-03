@@ -1,21 +1,34 @@
-import { useState } from "react";
-import { LogBox, StyleSheet } from "react-native";
+import { useState, useEffect } from "react";
+import { ActivityIndicator, LogBox, StyleSheet, Text } from "react-native";
+import API from "../API/API";
 import Screen from "../layout/Screen";
 import Icons from "../UI/Icons";
 import { Button, ButtonTray } from "../UI/Button";
 
 import ModuleList from "../entity/modules/ModuleList";
 
-import initialModules from "../../data/modules.js";
+
 
 const ModuleListScreen = ({ navigation }) => {
   // Initialisations ----------------------
   LogBox.ignoreLogs([
     "non-serializable values were found in the navigation state"
   ]);
+  const modulesEndpoint = 'https://softwarehub.uk/unibase/api/modules';
 
   // State ----------------------------
-  const [modules, setModules] = useState(initialModules);
+  const [modules, setModules] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loadModules = async (endpoint) => {
+    const response = await API.get(endpoint);
+    setIsLoading(false);
+    if (response.isSuccess) setModules(response.result);
+    console.log("Loaded modules:", response.result.map(m => m.ModuleID));
+
+  };
+  useEffect(() => { loadModules(modulesEndpoint) }, []);
+
 
   // Handlers -----------------------
   const handleDelete = (module) =>
@@ -53,9 +66,13 @@ const ModuleListScreen = ({ navigation }) => {
   // View -----------------------------
   return (
     <Screen>
+
       <ButtonTray>
         <Button label="Add" icon={<Icons.Add />} onClick={gotoAddScreen} />
       </ButtonTray>
+      {
+        isLoading && <ActivityIndicator />
+      };
       <ModuleList modules={modules} onSelect={gotoViewScreen} />
     </Screen>
   );
